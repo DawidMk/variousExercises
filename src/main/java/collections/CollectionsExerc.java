@@ -3,10 +3,7 @@ package collections;
 
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class CollectionsExerc {
@@ -25,6 +22,22 @@ public class CollectionsExerc {
   return Arrays.stream(animals).filter(StringUtils::isNotBlank).map(String::trim).collect(Collectors.toList());
     }
 
+    public static List<String> sortedAnimals(){
+       List<String> result = noBlankAnimals();
+        Collections.sort(result);
+//        result.sort(Comparator.naturalOrder());
+        return result;
+        }
+
+
+    public static List<String> sortedAnimalsStream(){
+        return sortedAnimals().stream().sorted(Comparator.naturalOrder()).collect(Collectors.toList());
+    }
+
+
+
     public static void main(String[] args) {
-        System.out.println(noBlankAnimals().toString());
+        System.out.println(sortedAnimals().toString());
+        System.out.println(sortedAnimalsStream().toString());
+
 }}

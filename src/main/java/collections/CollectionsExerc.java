@@ -17,21 +17,23 @@ public class CollectionsExerc {
             if (StringUtils.isNotBlank(animal)) {
                 resultList.add(animal.trim());
             }
-        }return resultList;
-    }
-    public static List<String> noBlankAnimalsStream() {
-  return Arrays.stream(animals).filter(StringUtils::isNotBlank).map(String::trim).collect(Collectors.toList());
+        }
+        return resultList;
     }
 
-    public static List<String> sortedAnimals(){
-       List<String> result = noBlankAnimals();
+    public static List<String> noBlankAnimalsStream() {
+        return Arrays.stream(animals).filter(StringUtils::isNotBlank).map(String::trim).collect(Collectors.toList());
+    }
+
+    public static List<String> sortedAnimals() {
+        List<String> result = noBlankAnimals();
         Collections.sort(result);
 //        result.sort(Comparator.naturalOrder());
         return result;
-        }
+    }
 
 
-    public static List<String> sortedAnimalsStream(){
+    public static List<String> sortedAnimalsStream() {
         return sortedAnimals().stream().sorted(Comparator.naturalOrder()).collect(Collectors.toList());
     }
 
@@ -72,26 +74,62 @@ public class CollectionsExerc {
         for (String animal : noBlankAnimals()) {
             if (result.containsKey(animal)) {
                 result.put(animal, result.get(animal) + 1);
-            }else{
-                result.put(animal,1L);
+            } else {
+                result.put(animal, 1L);
             }
-        }return result;
+        }
+        return result;
     }
 
     public static Map<String, Long> animalMapStream() {
-        return noBlankAnimals().stream().collect(Collectors.groupingBy(Function.identity(),Collectors.counting()));
+        return noBlankAnimals().stream().collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+    }
+
+
+    public static Map<Boolean, Long> howManyEmpties() {
+        List<String> noDupes = new ArrayList<>();
+        for (String animal : animals) {
+            if (!noDupes.contains(animal)) {
+                noDupes.add(animal);
+            }
+        }
+
+        Map<Boolean, Long> result = new HashMap<>();
+        for (String animal : noDupes) {
+            if (StringUtils.isBlank(animal)) {
+                if (result.containsKey(false)) {
+                    result.put(false, result.get(false) + 1);
+                } else {
+                    result.put(false, 1L);
+                }
+            } else {
+                if (result.containsKey(true)) {
+                    result.put(true, result.get(true) + 1);
+                } else {
+                    result.put(true, 1L);
+                }
+            }
+        }
+        return result;
+    }
+
+    public static Map<Boolean, Long> howManyEmptiesStream() {
+        List<String> noDupes = Arrays.stream(animals).distinct().collect(Collectors.toList());
+        return noDupes.stream().map(StringUtils::isNotBlank).collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
     }
 
 
     public static void main(String[] args) {
-        System.out.println(Arrays.toString(animals));
+//        System.out.println(Arrays.toString(animals));
 //        System.out.println(sortedAnimals().toString());
 //        System.out.println(sortedAnimalsDistinct().toString());
 //        System.out.println(sortedAnimalsDistinctStream().toString());
-        System.out.println(originalAnimalsDistinct().toString());
-        System.out.println(originalAnimalsDistinctStream().toString());
-        System.out.println(animalMap());
-        System.out.println(animalMapStream());
+//        System.out.println(originalAnimalsDistinct().toString());
+//        System.out.println(originalAnimalsDistinctStream().toString());
+//        System.out.println(animalMap());
+//        System.out.println(animalMapStream());
+        System.out.println(howManyEmptiesStream());
+
 
     }
 }

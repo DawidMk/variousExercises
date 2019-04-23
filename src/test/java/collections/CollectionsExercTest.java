@@ -1,5 +1,6 @@
 package collections;
 
+import org.hamcrest.collection.IsMapContaining;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -27,17 +28,28 @@ class CollectionsExercTest {
     @Test
     void animalMap() {
         Map<String, Long> animalMap = CollectionsExerc.animalMap();
-        List<String> animalList = Arrays.asList("cat","dog","mouse","rat","pig","rabbit","hamster","parrot","cat","dog","cat","pig","dog");
-
-Assertions.assertTrue(animalMap.containsKey("dog") && animalMap.containsValue(3L));
+//Assertions.assertTrue( animalMap.containsKey("dog") && animalMap.containsValue(1L));
+        IsMapContaining.hasEntry("dog",1L);
+        assertEquals(1, (long) animalMap.get("dog"));
 
     }
 
     @Test
     void animalMapStream() {
         Map<String, Long> animalMap = CollectionsExerc.animalMapStream();
-        List<String> animalList = Arrays.asList("cat","dog","mouse","rat","pig","rabbit","hamster","parrot","cat","dog","cat","pig","dog");
+        assertEquals(3, (long) animalMap.get("dog"));
 
+    }
 
+    @Test
+    void howManyEmpties() {
+        Map<Boolean, Long> animalMap = CollectionsExerc.howManyEmpties();
+        assertEquals(3, (long) animalMap.get(false));
+    }
+
+    @Test
+    void howManyEmptiesStream() {
+        Map<Boolean, Long> animalMap = CollectionsExerc.howManyEmptiesStream();
+        assertEquals(3, (long) animalMap.get(false));
     }
 }

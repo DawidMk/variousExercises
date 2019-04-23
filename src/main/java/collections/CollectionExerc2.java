@@ -69,14 +69,14 @@ public class CollectionExerc2 {
     public static Map<BigDecimal, Long> salaryMapStream() {
         return peopleList().stream().collect(Collectors.groupingBy(Customer::getSalary, Collectors.counting()));
     }
-/*
-    public static Map<String, Map<Double, Long>> mapOfMaps() {
-        Map<String, Map<Double, Long>> resultMap = new HashMap<>();
-        Map<Double, Long> innerMap;
+
+    public static Map<String, Map<BigDecimal, Long>> mapOfMaps() {
+        Map<String, Map<BigDecimal, Long>> resultMap = new HashMap<>();
+        Map<BigDecimal, Long> innerMap;
         for (Customer customer : peopleList()) {
-            Double salary = customer.getSalary().doubleValue();
+            BigDecimal salary = customer.getSalary();
             if (resultMap.containsKey(customer.getFirstName().trim())) {
-                innerMap = resultMap.get(customer.getFirstName());
+                innerMap = resultMap.get(customer.getFirstName().trim());
 //                innerMap = new HashMap<>();
                 Long c = innerMap.get(salary) == null ? 0L : innerMap.get(salary);
 
@@ -91,7 +91,7 @@ public class CollectionExerc2 {
             }
         }
         return resultMap;
-    }*/
+    }
 
     private static Map<String, Map<Double, Long>> mapOfMaps2() {
         Map<String, Map<Double, Long>> outerMap = new HashMap<>();
@@ -116,6 +116,7 @@ public class CollectionExerc2 {
     public static void main(String[] args) {
 //        System.out.println(peopleList());
         System.out.println(mapOfMaps2());
+        System.out.println(mapOfMaps());
 //        System.out.println(namesAndLastNamesList().toString());
 //        System.out.println(namesAndLastNamesListStream().toString());
     }
